@@ -1,0 +1,14 @@
+package com.bridgelabz.dao;
+
+import java.sql.SQLException;
+
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+import com.bridgelabz.model.Patient;
+
+public interface JdbcDao 
+{
+	 public void insertDoctorDetails(Doctor doctor);
+	 public void insertPatientsDetails(Patient patient);
+	 public void insertCliniqueDetails( Clinique clinique);
+}

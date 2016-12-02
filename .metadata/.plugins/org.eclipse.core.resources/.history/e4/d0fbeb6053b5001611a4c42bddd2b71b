@@ -1,0 +1,17 @@
+package com.bridgelabz.main;
+
+import com.bridgelabz.jsonread.CliniqueJsonReader;
+import com.bridgelabz.jsonread.DoctorJsonReader;
+
+public class CliniqueMangement 
+{
+	public static void main(String[] args)throws Exception
+	{
+		DoctorJsonReader doctorJsonReader = new DoctorJsonReader();
+		doctorJsonReader.jsonDoctorRead();
+		
+		CliniqueJsonReader cliniqueJsonReader = new CliniqueJsonReader();
+		cliniqueJsonReader.jsonCliniqueRead();
+		
+	}
+}

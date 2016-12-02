@@ -1,0 +1,8 @@
+package com.bridgelabz.dao;
+
+import com.bridgelabz.model.Doctor;
+
+public interface JdbcDao 
+{
+	 public void insertDoctorDetails(Doctor doctor);
+}

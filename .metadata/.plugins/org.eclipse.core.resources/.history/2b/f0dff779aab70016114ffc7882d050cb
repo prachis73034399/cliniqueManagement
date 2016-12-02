@@ -1,0 +1,168 @@
+package com.bridgelabz.jsonread;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.bridgelabz.dao.JdbcDao;
+import com.bridgelabz.dao.QueryInjection;
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+import com.bridgelabz.model.Patient;
+
+
+public class DataJsonReader<T>
+{
+	public void jsonDoctorRead() throws ParseException, SQLException
+	{
+		
+		JdbcDao jdbcDao = new QueryInjection();
+		//creating JSonParser Object it is use to convert a JSON text to a JavaScript object.
+		JSONParser parser = new JSONParser();
+		File file = new File("data.json");
+		try
+		{    
+			
+			Object object = parser.parse(new FileReader(file));
+			JSONObject object1 = (JSONObject) object;//json object created
+			JSONArray doctorsArray = (JSONArray) object1.get("Doctors");
+			JSONArray cliniqueArray = (JSONArray) object1.get("Cliniques");
+			System.out.println("$$$$$$$$  "+cliniqueArray.size());
+			for (Object object2 : cliniqueArray) 
+			{
+				System.out.println("vvvvvvvvv"+object2);
+			}
+			JSONArray patientsArray = (JSONArray) object1.get("Patients");
+			
+			jdbcDao.dropTable();
+		//<<<<<------------ for reading clinique data----------->>>>>>>>>>			
+			for(int i=0; i< cliniqueArray.size(); i++)
+			{
+				System.out.println("Prachi");
+				Clinique clinique= new Clinique();
+				
+				JSONObject cliniques = (JSONObject) cliniqueArray.get(i);
+				System.out.println("RRRRRRRRR"+ cliniques);
+				
+				String cliniqueName = (String)cliniques.get("Name");
+				
+				System.out.println(cliniqueName);
+				clinique.setCliniqueName(cliniqueName);
+			
+				int cliniqueId = Integer.parseInt(String.valueOf(cliniques.get("ID")));
+				System.out.println(cliniqueId);
+				clinique.setCliniqueId(cliniqueId);
+				
+				jdbcDao.insertCliniqueDetails(clinique);
+				
+
+			}
+
+			//<<<<<------------ for reading doctor data----------->>>>>>>>>>
+			for(int i=0; i< doctorsArray.size(); i++)
+			{
+				
+				Doctor doctor = new Doctor();
+				JSONObject doctors= (JSONObject) doctorsArray.get(i);
+				Object obj = doctors.get("Name");
+				String name = (String)obj;
+				doctor.setDoctorName(name);
+			
+				obj = doctors.get("ID");
+				int idInfo = Integer.parseInt(String.valueOf(obj));
+				doctor.setDoctorId(idInfo);
+				
+				obj = doctors.get("Specialization");
+				String specialization = (String)obj;
+				doctor.setSpecialization(specialization);
+				
+				obj = doctors.get("Availability");
+				String availability = (String)obj;
+				doctor.setAvailability(availability);
+				
+/*				obj = doctors.get("ClinicId");
+				int clinicId = Integer.parseInt(String.valueOf(obj));
+				doctor.setCliniqueId(clinicId);*/
+				
+				JSONArray array =  (JSONArray) doctors.get("Clinic");
+				for (int j = 0; j < array.size(); j++)
+				{
+					JSONObject clinicObject= (JSONObject)array.get(j);
+					int clinid= Integer.parseInt(String.valueOf(clinicObject.get("ClinicID")));
+					System.out.println("#########"+clinid);
+					String availability1 = (String) clinicObject.get("Availability");
+					System.out.println("FFFFFFFFF"+availability1);
+				}
+				
+				//doctor.setCliniqueId(a);
+				
+				jdbcDao.insertDoctorDetails(doctor);
+				jdbcDao.insertIntoCliniqDoctorTable(doctor);
+				jdbcDao.selectQuery();
+
+			}
+			
+			//<<<<<------------ for reading patient data----------->>>>>>>>>>
+			for(int i=0; i< patientsArray.size(); i++)
+			{
+				System.out.println("pRATIK");
+				
+				Patient patient= new Patient();
+				JSONObject patients= (JSONObject) patientsArray.get(i);
+
+				Object obj = patients.get("MobileNo");
+				String mblNumber = (String)obj;
+				patient.setMobileNumber(mblNumber);
+			
+
+				
+				obj = patients.get("ID");
+				int id = Integer.parseInt(String.valueOf(obj));
+				patient.setPatientId(id);
+				System.out.println("idddd"+id);
+				
+				/*obj = patients.get("Age");
+				System.out.println(obj);
+				int age = Integer.parseInt(String.valueOf(obj));
+				System.out.println("AGEEEEEEE"+age);
+				patient.setPatientId(age);
+				System.out.println(patient.getPatientId());*/
+				
+				obj = patients.get("Name");
+				String name = (String)obj;
+				patient.setPatientName(name);
+				
+				JSONArray a =  (JSONArray) patients.get("Clinique Id");
+				//System.out.println(a);
+				patient.setCliniqueId(a);
+
+				jdbcDao.insertPatientsDetails(patient);
+				jdbcDao.insertIntoCliniqPatientTable(patient);
+				jdbcDao.selectPatient(patient);
+				jdbcDao.searchCliniquesForPatient(patient);
+				//jdbcDao.searchDoctorForPatient(patient);
+				//jdbcDao.searchNameOfPatientUsingId(patient);
+				
+			}
+		} 
+		catch(FileNotFoundException e1)
+		{
+			e1.printStackTrace();
+		} 
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
+}

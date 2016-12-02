@@ -1,0 +1,60 @@
+package com.bridgelabz.JadbcConnector;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Properties;
+
+import com.bridgelabz.model.Doctor;
+import java.sql.PreparedStatement;
+import java.io.FileInputStream;
+public class JdbcConnection
+{
+	//Doctor doctor
+
+	   public void jdbcConnector()
+	   {
+	      try
+	      {
+	    	// Initializing Predefined Properties class and making object of the same
+				Properties prop = new Properties();
+				String propFileName = "/home/bridgeit/clinique/cliniqueManagement/src/jdbc.properties";
+				// passing propFileName to the FileInputStream class object 
+				FileInputStream fis = new FileInputStream(propFileName);
+				// calling load method of Properties class
+					prop.load(fis);
+				// ...............get the property value and store it into variable............
+				String jdbcDriver = prop.getProperty("jdbc.driverClassName");
+				System.out.println();
+				String jdbcURL = prop.getProperty("jdbc.url");
+				String jdbcUsernName = prop.getProperty("jdbc.username");
+				String jdbcPassWord = prop.getProperty("jdbc.password");
+				Class.forName(jdbcDriver);
+
+	        Connection conn = DriverManager.getConnection(jdbcURL,jdbcUsernName,jdbcPassWord);
+	        Statement stmt = conn.createStatement();
+	        try
+	        {
+		        String sql = "CREATE TABLE Doctor " +
+		                   "(id INTEGER not NULL, " +
+		                   " doctname VARCHAR(255), " + 
+		                   " Specialization VARCHAR(255), " + 
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+
+            String sql = ("INSERT INTO EMPLOYEE (ID,FIRST_NAME,LAST_NAME,STAT_CD) VALUES (1,'Lokesh','Gupta',5)");
+            System.out.println("xxxxxxxxxx");
+	        
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	   }
+}

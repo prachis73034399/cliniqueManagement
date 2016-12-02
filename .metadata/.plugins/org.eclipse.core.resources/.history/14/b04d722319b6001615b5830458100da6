@@ -1,0 +1,128 @@
+package com.bridgelabz.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+import com.bridgelabz.model.Patient;
+import com.bridgelabz.dao.DatabaseConnection; 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.io.FileInputStream;
+public class QueryInjection  implements JdbcDao
+{
+	Doctor doctor;
+	Clinique clinique;
+	Patient patient;
+
+	DatabaseConnection databaseConnection = new DatabaseConnection();
+	Statement stmt= databaseConnection.connection();	 
+	 
+
+        //<<<<<<<<<----------------For Doctor Table------------------>>>>>>>>>>>>>>>>>>>
+        public void insertDoctorDetails(Doctor doctor)
+        {
+        try
+        {
+	        String sql = "CREATE TABLE Doctor " +
+	                   "(id INTEGER not NULL, " +
+	                   " doctname VARCHAR(255), " + 
+	                   " availability VARCHAR(255), " + 
+	                   " Clinique_Id VARCHAR(255), " + 
+	                   " Specialization VARCHAR(255), " + 
+	                   " PRIMARY KEY ( id ))"; 
+	        
+	        stmt.executeUpdate(sql);
+	           
+	        System.out.println("Inserted records into the table...");
+        }
+        catch(Exception e)
+        {
+        	System.out.println("alredy exist");
+        }
+        
+        String insert1= "INSERT INTO Doctor (id,doctname,availability,Specialization) VALUES (";
+   	 String sql1 =insert1
+       		+doctor.getDoctorId()+",'"
+       		+doctor.getDoctorName()+"','"
+       		+doctor.getAvailability()+"','"
+       		/*+((Doctor) array.get(0).get(3)).getCliniqueId()+",'"*/
+       		+doctor.getSpecialization()+"')";
+   	 System.out.println("SSQL"+sql1);
+   	 stmt.executeUpdate(sql1);
+        }
+        
+	        //<<<<<<<<<----------------For Patient Table------------------>>>>>>>>>>>>>>>>>>>
+	        
+	        public void insertPatientsDetails(Patient patient)
+	        {
+	        try
+	        {
+		        String sql = "CREATE TABLE Patient " +
+		                   "(id INTEGER not NULL, " +
+		                   "(clinique_id INTEGER , " +
+		                   " patient_Name VARCHAR(255), " + 
+		                   " Age VARCHAR(255), " + 
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	        
+	        String insert1= "INSERT INTO Doctor (id,clinique_id,patient_Name,Age) VALUES (";
+       	 String sql1 =insert1
+           		+patient.getPatientId()+",'"
+           		+patient.getPatientName()+"','"
+           		+patient.getAge()+"')";
+           		
+           		System.out.println("SSQL"+sql1);
+           		stmt.executeUpdate(sql1);
+	        }
+	        
+	        //<<<<<<<<<----------------For Clinique Table------------------>>>>>>>>>>>>>>>>>>>
+	        public void insertCliniqueDetails( Clinique clinique) throws SQLException
+	        {
+	        
+
+				        String sql = "CREATE TABLE Clinique " +
+				                   "(id INTEGER not NULL, " +
+				                   " clinique_Name VARCHAR(255), " + 
+				                   " PRIMARY KEY ( id ))"; 
+				        
+				        stmt.executeUpdate(sql);
+				           
+				        System.out.println("Inserted records into the table...");
+			        
+
+			        String insert1= "INSERT INTO Doctor (id,clinique_Name) VALUES (";
+		       	 String sql1 =insert1
+		       			+clinique.getCliniqueId()+"','"
+		           		+clinique.getCliniqueName()+"')";
+		           		
+		           		
+		           		/*+((Doctor) array.get(0).get(3)).getCliniqueId()+",'"*/
+		           		
+		       	 System.out.println("SSQL"+sql1);
+		       	 stmt.executeUpdate(sql1);
+	        }
+
+	     
+
+	        	 
+	        	 
+	        	
+	           
+
+	        
+	   
+
+}

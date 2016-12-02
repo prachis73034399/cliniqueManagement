@@ -1,0 +1,41 @@
+package com.bridgelabz.model;
+
+public class Doctor
+{
+
+	public int getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(int doctorId) {
+		this.doctorId = doctorId;
+	}
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getSpecialization() {
+		return specialization;
+	}
+	public void setSpecialization(String specialization) {
+		this.specialization = specialization;
+	}
+	public int getPageId() {
+		return pageId;
+	}
+	public void setPageId(int pageId) {
+		this.pageId = pageId;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	private int doctorId;
+	private String patientName;
+	private String specialization;
+	private int pageId;
+	private int age;
+}

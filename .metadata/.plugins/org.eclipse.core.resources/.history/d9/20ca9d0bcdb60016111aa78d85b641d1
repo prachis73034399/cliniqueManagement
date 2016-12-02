@@ -1,0 +1,21 @@
+package com.bridgelabz.main;
+
+
+
+import com.bridgelabz.jsonread.DataJsonReader;
+import java.util.ArrayList;
+import com.bridgelabz.model.Doctor;
+public class CliniqueMangement 
+{
+	public static <T> void main(String[] args)throws Exception
+	{
+		Doctor doct= new Doctor();
+		
+		DataJsonReader doctorJsonReader = new DataJsonReader();
+		 doctorJsonReader.jsonDoctorRead();
+
+		
+		
+		
+	}
+}

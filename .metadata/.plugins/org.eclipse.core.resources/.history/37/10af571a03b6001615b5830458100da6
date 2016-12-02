@@ -1,0 +1,135 @@
+package com.bridgelabz.JadbcConnector;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import com.bridgelabz.model.Doctor;
+import java.sql.PreparedStatement;
+import java.io.FileInputStream;
+public class JdbcConnection 
+{
+	//Doctor doctor
+
+	   public <T> void jdbcConnector(ArrayList<ArrayList<T>> array)
+	   {
+		 
+	      try
+	      {
+	    	  ArrayList<ArrayList<T>> array1= array;
+
+	    	// Initializing Predefined Properties class and making object of the same
+				Properties prop = new Properties();
+				String propFileName = "/home/bridgeit/clinique/cliniqueManagement/src/jdbc.properties";
+				// passing propFileName to the FileInputStream class object 
+				FileInputStream fis = new FileInputStream(propFileName);
+				// calling load method of Properties class
+					prop.load(fis);
+				// ...............get the property value and store it into variable............
+				String jdbcDriver = prop.getProperty("jdbc.driverClassName");
+				System.out.println();
+				String jdbcURL = prop.getProperty("jdbc.url");
+				String jdbcUsernName = prop.getProperty("jdbc.username");
+				String jdbcPassWord = prop.getProperty("jdbc.password");
+				Class.forName(jdbcDriver);
+
+	        Connection conn = DriverManager.getConnection(jdbcURL,jdbcUsernName,jdbcPassWord);
+	        Statement stmt = conn.createStatement();
+	        //<<<<<<<<<----------------For Doctor Table------------------>>>>>>>>>>>>>>>>>>>
+	        try
+	        {
+		        String sql = "CREATE TABLE Doctor " +
+		                   "(id INTEGER not NULL, " +
+		                   " doctname VARCHAR(255), " + 
+		                   " availability VARCHAR(255), " + 
+		                   " Clinique_Id VARCHAR(255), " + 
+		                   " Specialization VARCHAR(255), " + 
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	        
+	        //<<<<<<<<<----------------For Patient Table------------------>>>>>>>>>>>>>>>>>>>
+	        try
+	        {
+		        String sql = "CREATE TABLE Patient " +
+		                   "(id INTEGER not NULL, " +
+		                   " patient_Name VARCHAR(255), " + 
+		                   " mobile_Number VARCHAR(255), " + 
+		                   " Age VARCHAR(255), " + 
+		                   " Specialization VARCHAR(255), " + 
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+
+	        
+	        //<<<<<<<<<----------------For Clinique Table------------------>>>>>>>>>>>>>>>>>>>
+	        
+	        try
+	        {
+		        String sql = "CREATE TABLE Doctor " +
+		                   "(id INTEGER not NULL, " +
+		                   " doctname VARCHAR(255), " + 
+		                   " availability VARCHAR(255), " + 
+		                   " Clinique_Id VARCHAR(255), " + 
+		                   " Specialization VARCHAR(255), " + 
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+
+
+	        System.out.println("ArrayList Size: "+array1.size());  
+/*	        for(int i= 0; i<arrayList.size(); i++)
+	        {*/
+//	        	System.out.println("prachi");
+//	        	//System.out.println("WWWWWWWW"+((Doctor) array.get(1).get(i)).getDoctorId());
+//	        	 String insert= "INSERT INTO Doctor (id,doctname,availability,Specialization) VALUES (";
+//	        	 String sql =insert
+//	            		+((Doctor) array.get(0).get(0)).getDoctorId()+",'"
+//	            		+((Doctor) array.get(0).get(1)).getDoctorName()+"','"
+//	            		+((Doctor) array.get(0).get(2)).getAvailability()+"','"
+//	            		/*+((Doctor) array.get(0).get(3)).getCliniqueId()+",'"*/
+//	            		+((Doctor) array.get(0).get(4)).getSpecialization()+"')";
+//	        	 System.out.println("SSQL"+sql);
+//	        	 stmt.executeUpdate(sql);
+	        	 
+	        	 
+	        	 String insert1= "INSERT INTO Doctor (id,doctname,availability,Specialization) VALUES (";
+	        	 String sql1 =insert1
+	            		+((Doctor) array.get(1).get(0)).getDoctorId()+",'"
+	            		+((Doctor) array.get(1).get(1)).getDoctorName()+"','"
+	            		+((Doctor) array.get(1).get(2)).getAvailability()+"','"
+	            		/*+((Doctor) array.get(0).get(3)).getCliniqueId()+",'"*/
+	            		+((Doctor) array.get(1).get(4)).getSpecialization()+"')";
+	        	 System.out.println("SSQL"+sql1);
+	        	 stmt.executeUpdate(sql1);
+	           
+	        //}
+	        
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	   }
+}

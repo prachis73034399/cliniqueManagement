@@ -1,0 +1,280 @@
+package com.bridgelabz.dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+import com.bridgelabz.model.Patient;
+public class QueryInjection  implements JdbcDao
+{
+	Doctor doctor;
+	Clinique clinique;
+	Patient patient;
+
+	DatabaseConnection databaseConnection = new DatabaseConnection();
+	Statement stmt= databaseConnection.connection();
+	
+	public void dropTable() throws SQLException
+	{
+		try
+		{
+			String sql1= "DROP TABLE Clinique";
+			stmt.executeUpdate(sql1);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		try
+		{
+			String sql2= "DROP TABLE Doctor";
+			stmt.executeUpdate(sql2);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		try
+		{
+			String sql3= "DROP TABLE Patient";
+			stmt.executeUpdate(sql3);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		try{
+			String sql4= "DROP TABLE Dr_clinique";
+			stmt.executeUpdate(sql4);
+		}catch(Exception e){
+			
+		}
+		
+		try{
+			String sql4= "DROP TABLE Patient_clinique";
+			stmt.executeUpdate(sql4);
+		}catch(Exception e){
+			
+		}
+	}
+	
+	 //<<<<<<<<<----------------For Clinique Table------------------>>>>>>>>>>>>>>>>>>>
+    public void insertCliniqueDetails( Clinique clinique) throws SQLException
+    {
+    	try
+        {
+	        String sql = "CREATE TABLE Clinique " +
+	                   "(id INTEGER not NULL, " +
+	                   " clinique_Name VARCHAR(255), " + 
+	                   " PRIMARY KEY ( id ))"; 
+	        
+	        stmt.executeUpdate(sql);
+	           
+	        System.out.println("Inserted records into the  Clinique table...");
+        }
+        catch(SQLException e)
+        {
+        	System.out.println(e);
+        }
+	        
+    	String sql1  = "INSERT INTO Clinique(id,clinique_Name) VALUES("
+					+ clinique.getCliniqueId() + ",'"  + clinique.getCliniqueName() + "')";
+           		
+    	System.out.println("SSQL"+sql1);
+       	 stmt.executeUpdate(sql1);
+    }
+
+
+        //<<<<<<<<<----------------For Doctor Table------------------>>>>>>>>>>>>>>>>>>>
+    public void insertDoctorDetails(Doctor doctor) throws SQLException 
+    {
+    	
+        try
+        {
+	        String sql = "CREATE TABLE Doctor " +
+	                   "(id INTEGER not NULL, " +
+	                   " doctname VARCHAR(255), " + 
+	                   " availability VARCHAR(255), " + 
+	                  /* " clinique_Id VARCHAR(255), " + */
+	                   " Specialization VARCHAR(255), " + 
+	                   " PRIMARY KEY ( id ))"; 
+	        
+	        stmt.executeUpdate(sql);
+	           
+	        System.out.println("Inserted records into the  Doctor table...");
+        }
+        catch(SQLException e)
+        {
+        	System.out.println("alredy exist");
+        }
+        
+        
+        try
+        {
+	        String sql = "CREATE TABLE DRClinique " +
+	                   "(doct_Id INTEGER not NULL, " +
+	                   "(clinique_id INTEGER , " +
+	                   " PRIMARY KEY ( doct_Id ))"; 
+	        
+	        stmt.executeUpdate(sql);
+	           
+	        System.out.println("Inserted records into the DrClinic  table...");
+        }
+        catch(Exception e)
+        {
+        	System.out.println("alredy exist");
+        }
+        
+	       
+	   	 	
+	   	 String sql1 = "INSERT INTO Doctor(id,doctname,availability,Specialization) VALUES("
+					+ doctor.getDoctorId() + ",'" +doctor.getDoctorName() + "','"
+					+ doctor.getAvailability() + "','" + doctor.getSpecialization() + "')";
+	   	 	
+	   	 stmt.executeUpdate(sql1);
+    }
+    
+	        //<<<<<<<<<----------------For Patient Table------------------>>>>>>>>>>>>>>>>>>>
+	        
+        public void insertPatientsDetails(Patient patient) throws SQLException
+        {
+	        try
+	        {
+		        String sql = "CREATE TABLE Patient " +
+		                   "(id INTEGER not NULL, " +
+		                  /* "(clinique_id INTEGER , " +*/
+		                   " patient_Name VARCHAR(255), " + 
+		                  
+		                   " PRIMARY KEY ( id ))"; 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the Patient  table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	        
+	      
+       	 	
+	        String sql1 = "INSERT INTO Patient(id,patient_Name) VALUES("
+					+ patient.getPatientId() + ",'" + patient.getPatientName()+ "')";
+					
+       
+           		System.out.println("SSQL"+sql1);
+           		stmt.executeUpdate(sql1);
+        }
+        
+        
+        public void insertIntoCliniqDoctorTable(Doctor doctor) throws SQLException
+        {
+        	System.out.println("JJJJJJJJJ"+doctor.getCliniqueId());
+	        try
+	        {
+		        String sql = "CREATE TABLE Dr_clinique " +
+		                   "(doct_Id INTEGER not NULL, " +
+		                   "clinique_id INTEGER )"; 
+		        
+		 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the DrClinic  table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	        
+	        System.out.println("444444444"+doctor.getCliniqueId().size());
+	   	 	
+	   	 	
+	   	for(int i=0; i<doctor.getCliniqueId().size(); i++ )
+	   	{
+	   	 String sql1 = "INSERT INTO Dr_clinique(doct_Id,clinique_id) VALUES("
+					+ doctor.getDoctorId() + ",'" + doctor.getCliniqueId().get(i)+ "')";
+					
+	
+	       		
+	       		System.out.println("SSQL"+sql1);
+	       		stmt.executeUpdate(sql1);
+	    }
+        }
+	       
+        
+        public void insertIntoCliniqPatientTable(Patient patient) throws SQLException
+        {
+        	//System.out.println("JJJJJJJJJ"+patient.getCliniqueId());
+	        try
+	        {
+		        String sql = "CREATE TABLE Patient_clinique " +
+		                   "(patient_Id INTEGER not NULL, " +
+		                   "clinique_id INTEGER )"; 
+		        
+		 
+		        
+		        stmt.executeUpdate(sql);
+		           
+		        System.out.println("Inserted records into the DrClinic  table...");
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	        
+	       // System.out.println("5555555""+patient.getCliniqueId().size());
+	   	 	
+	   	 	
+	   	for(int i=0; i<patient.getCliniqueId().size(); i++ )
+	   	{
+	   	 String sql1 = "INSERT INTO Patient_clinique(patient_Id,clinique_id) VALUES("
+					+ patient.getPatientId() + ",'" + patient.getCliniqueId().get(i)+ "')";
+					
+	   	 System.out.println("SSQL"+sql1);
+	       		stmt.executeUpdate(sql1);
+	    }
+        }
+
+        
+        public void selectQuery() throws SQLException
+        {
+        	//System.out.println("JJJJJJJJJ"+patient.getCliniqueId());
+	        try
+	        {
+	        	 String sql = "SELECT * FROM Doctor";
+	             ResultSet rs = stmt.executeQuery(sql);
+	             //STEP 5: Extract data from result set
+	             while(rs.next()){
+	                //Retrieve by column name
+	                int id  = rs.getInt("id");
+	                String doctName = rs.getString("doctname");
+	                String availability = rs.getString("availability");
+	                String specialization = rs.getString("Specialization");
+
+	                //Display values
+	                System.out.print("ID: " + id);
+	                System.out.print("DOCNAME: " + doctName);
+	                System.out.print(" Availabity: " + availability);
+	                System.out.println("Specialization : " + specialization);
+	             }
+	             rs.close();
+	        }
+	        catch(Exception e)
+	        {
+	        	System.out.println("alredy exist");
+	        }
+	     }
+	        	 
+	        	 
+	        	
+	           
+
+	        
+	   
+
+}

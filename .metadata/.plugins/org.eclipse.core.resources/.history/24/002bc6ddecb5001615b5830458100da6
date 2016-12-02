@@ -1,0 +1,147 @@
+package com.bridgelabz.jsonread;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+import com.bridgelabz.model.Patient;
+
+
+public class DataJsonReader<T>
+{
+	public ArrayList<Doctor> jsonDoctorRead() throws ParseException
+	{
+		ArrayList<Doctor> doctModelArray = new ArrayList<Doctor>();
+		ArrayList<Clinique> clinicModelArray = new ArrayList<Clinique>();
+		ArrayList<Patient> payModelArray = new ArrayList<Patient>();
+		Doctor doctor = new Doctor();
+		Clinique clinique= new Clinique();
+		Patient patient= new Patient();
+		ArrayList<ArrayList<T>> allModelArray= new ArrayList<ArrayList<T>>();
+			//creating JSonParser Object it is use to convert a JSON text to a JavaScript object.
+			JSONParser parser = new JSONParser();
+			File file = new File("data.json");
+			try
+			{    
+				
+				Object object = parser.parse(new FileReader(file));
+				JSONObject doctObj = (JSONObject) object;//json object created
+				JSONArray doctorsArray = (JSONArray) doctObj.get("Doctors");
+				JSONArray cliniqueArray = (JSONArray) doctObj.get("Cliniques");
+				JSONArray patientsArray = (JSONArray) doctObj.get("Patients");
+				JSONArray a;
+				//Parse method will read data from the file and return the object
+				//JSONArray array = (JSONArray)parser.parse(new FileReader("doctor.json"));
+	                        
+				//calling iterator method on jsonArray object
+				
+
+				//displaying the details of the inventory
+			//<<<<<------------ for reading clinique data----------->>>>>>>>>>			
+				for(int i=0; i< cliniqueArray.size(); i++)
+				{
+					Iterator<JSONObject> iterator = cliniqueArray.iterator();
+					JSONObject cliniques = (JSONObject)iterator.next();	
+
+					Object obj = cliniques.get("Name");
+					String cliniqueName = (String)obj;
+					clinique.setCliniqueName(cliniqueName);
+				
+					obj = cliniques.get("ID");
+					int cliniqueId = Integer.parseInt(String.valueOf(obj));
+					clinique.setCliniqueId(cliniqueId);
+					
+					clinicModelArray.add(clinique);
+
+				}
+
+				//<<<<<------------ for reading doctor data----------->>>>>>>>>>
+				for(int i=0; i< doctorsArray.size(); i++)
+				{
+					Iterator<JSONObject> iterator = doctorsArray.iterator();
+					JSONObject doctors = (JSONObject)iterator.next();	
+
+					Object obj = doctors.get("Name");
+					String name = (String)obj;
+					doctor.setDoctorName(name);
+				
+					obj = doctors.get("ID");
+					int idInfo = Integer.parseInt(String.valueOf(obj));
+					doctor.setDoctorId(idInfo);
+					
+					obj = doctors.get("Specialization");
+					String specialization = (String)obj;
+					doctor.setSpecialization(specialization);
+					
+					obj = doctors.get("Availability");
+					String availability = (String)obj;
+					doctor.setAvailability(availability);
+					
+					
+					a =  (JSONArray) doctors.get("ClinicId");
+					System.out.println("eeeeeeeeeee"+a);
+					doctor.setCliniqueId(a);
+					
+					doctModelArray.add(doctor);
+
+				}
+				
+				//<<<<<------------ for reading patient data----------->>>>>>>>>>
+				for(int i=0; i< patientsArray.size(); i++)
+				{
+					Iterator<JSONObject> iterator = patientsArray.iterator();
+					JSONObject patients = (JSONObject)iterator.next();	
+
+					Object obj = patients.get("MobileNo");
+					String mblNumber = (String)obj;
+					patient.setMobileNumber(mblNumber);
+				
+					obj = patients.get("DoctID");
+					int doctId = Integer.parseInt(String.valueOf(obj));
+					patient.setDoctorsId(doctId);
+					
+					obj = patients.get("ID");
+					int id = Integer.parseInt(String.valueOf(obj));
+					patient.setPatientId(id);
+					
+					obj = patients.get("Age");
+					int age = Integer.parseInt(String.valueOf(obj));
+					patient.setPatientId(age);
+					
+					obj = patients.get("Name");
+					String name = (String)obj;
+					patient.setPatientName(name);
+					
+					a =  (JSONArray) patients.get("Clinique Id");
+					System.out.println(a);
+					patient.setCliniqueId(a);
+
+					payModelArray.add(patient);
+					
+				}
+					
+				//allModelArray.add((ArrayList<T>) doctModelArray);
+			
+			} 
+			catch(FileNotFoundException e1)
+			{
+				e1.printStackTrace();
+			} 
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			return null;
+		}
+	
+}

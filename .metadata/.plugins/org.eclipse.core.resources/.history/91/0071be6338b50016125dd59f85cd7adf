@@ -1,0 +1,11 @@
+package com.bridgelabz.model;
+
+public class Doctor
+{
+
+	private int doctorId;
+	private String patientName;
+	private String specialization;
+	private int pageId;
+	private int age;
+}

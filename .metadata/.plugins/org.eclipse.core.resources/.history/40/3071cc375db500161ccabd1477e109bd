@@ -1,0 +1,23 @@
+package com.bridgelabz.main;
+
+import com.bridgelabz.JadbcConnector.JdbcConnection;
+import com.bridgelabz.jsonread.CliniqueJsonReader;
+import com.bridgelabz.jsonread.DoctorJsonReader;
+import java.util.ArrayList;
+import com.bridgelabz.model.Doctor;
+public class CliniqueMangement 
+{
+	public static void main(String[] args)throws Exception
+	{
+		Doctor doct= new Doctor();
+		DoctorJsonReader doctorJsonReader = new DoctorJsonReader();
+		ArrayList<Doctor> array =(ArrayList<Doctor>) doctorJsonReader.jsonDoctorRead();
+		
+		CliniqueJsonReader cliniqueJsonReader = new CliniqueJsonReader();
+		cliniqueJsonReader.jsonCliniqueRead();
+		JdbcConnection jbc= new JdbcConnection();
+		
+		
+		jbc.jdbcConnector(array);
+	}
+}

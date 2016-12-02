@@ -1,0 +1,51 @@
+package com.bridgelabz.main;
+
+
+
+import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.dao.JdbcDao;
+import com.bridgelabz.dao.QueryInjection;
+import com.bridgelabz.jsonread.DataJsonReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.bridgelabz.model.Doctor;
+public class CliniqueMangement 
+{
+	public static <T> void main(String[] args)throws Exception
+	{
+		JdbcDao jdbcDao = new QueryInjection();
+		Doctor doct= new Doctor();
+		Utility u= new Utility();
+		DataJsonReader doctorJsonReader = new DataJsonReader();
+		 doctorJsonReader.jsonDoctorRead();
+
+		 System.out.println("...Choose Option... ") ;
+			System.out.println("1---Take Appointment ") ;
+
+			System.out.println("...Choose Option...") ;
+			int choice =u.inputNumber();
+			switch(choice)
+			{
+				case 1:
+						System.out.println("Enter the id of Patient:");
+						int patientId =u.inputNumber();
+						String patientName =jdbcDao.searchNameOfPatientUsingId(patientId);
+						List<Integer> a =jdbcDao.searchCliniqueForPatient(patientId);
+						for (Integer integer : a) 
+						{
+							System.out.println("Available Cliniques:"+a);
+						}
+						System.out.println("@@@@@@@@@@@@@@@@@"+a);
+						
+			
+						System.out.println("Patient Name IS :"+patientName);
+						
+					break;
+
+				default : System.out.println("Invalid Key Pressed..!!!");
+			}
+		
+		
+	}
+}

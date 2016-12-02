@@ -1,0 +1,172 @@
+{
+   "Doctors": [
+    {
+      "Name": "Dr. Joshi",
+      "DoctID": 101,
+      "Specialization": "Heart",
+      "Clinic": [
+        {
+          "ClinicID": "1",
+          "Availability": "Morning"
+        },
+        {
+          "ClinicID": "2",
+          "Availability": "Evening"
+        }
+      ]
+    },
+    {
+      "Name": "Dr. Patel",
+      "DoctID": 102,
+      "Specialization": "Eyes",
+      "Clinic": [
+        {
+          "ClinicID": "3",
+          "Availability": "Morning/Evening"
+        }
+      ]
+    },
+    {
+      "Name": "Dr. Naved",
+      "DoctID": 103,
+      "Specialization": "Brain",
+      "Clinic": [
+        {
+          "ClinicID": "1",
+          "Availability": "Morning"
+        },
+        {
+          "ClinicID": "5",
+          "Availability": "Evening"
+        }
+      ]
+    },
+    {
+      "Name": "Dr. Desai",
+      "DoctID": 104,
+      "Specialization": "General",
+      "Clinic": [
+        {
+          "ClinicID": "3",
+          "Availability": "Morning"
+        },
+        {
+          "ClinicID": "4",
+          "Availability": "Evening"
+        }
+      ]
+    },
+    {
+      "Name": "Dr. Jeet",
+      "DoctID": 105,
+      "Specialization": "Skin",
+      "Clinic": [
+        {
+          "ClinicID": "3",
+          "Availability": "Evening"
+        }
+      ]
+    }
+  ],
+  "Cliniques": [
+    {
+      "Name": "City Hospital",
+      "ID": 1
+    },
+    {
+      "Name": "KEM",
+      "ID": 2
+    },
+    {
+      "Name": "Lilavati Hospital",
+      "ID": 3
+    },
+    {
+      "Name": "Tata Hospital",
+      "ID": 4 
+    },
+    {
+      "Name": "J.J. Hospital",
+      "ID": 5
+    }
+  ],
+  "Patients": [
+    {
+      "MobileNo": "9087645342",
+      "DoctID": 1,
+      "ID": 1,
+      "Age": 30,
+      "Name": "Mr. Patil",
+      "Clinique Id": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "MobileNo": "8898381236",
+      "DoctID": 1,
+      "ID": 2,
+      "Age": 20,
+      "Name": "Ms. Sandhya",
+      "Clinique Id": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "MobileNo": "7745095412",
+      "DoctID": 5,
+      "ID": 3,
+      "Age": 33,
+      "Name": "Mrs. Yadav",
+      "Clinique Id": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "MobileNo": "9029673179",
+      "DoctID": 2,
+      "ID": 4,
+      "Age": 24,
+      "Name": "Ms. Swati",
+      "Clinique Id": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "MobileNo": "9854215470",
+      "DoctID": 4,
+      "ID": 5,
+      "Age": 45,
+      "Name": "Mrs. Pande",
+      "Clinique Id": [
+        "4",
+        "2"
+      ]
+    },
+    {
+      "MobileNo": "8268154325",
+      "DoctID": 4,
+      "ID": 6,
+      "Age": 5,
+      "Name": "Sonu",
+      "Clinique Id": [
+        "4",
+        "3"
+      ]
+    },
+    {
+      "MobileNo": "9702515462",
+      "DoctID": 4,
+      "ID": 7,
+      "Age": 8,
+      "Name": "Sonal",
+      "Clinique Id": [
+        "2",
+        "5"
+      ]
+    }
+  ]
+}

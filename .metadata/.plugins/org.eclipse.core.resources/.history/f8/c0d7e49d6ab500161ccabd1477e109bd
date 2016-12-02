@@ -1,0 +1,57 @@
+{
+  
+  "Doctors": [
+    {
+      "Name": "Dr. Joshi",
+      "ID": 1,
+      "Specialization": "Heart",
+      "Availability": "Morning"
+    },
+    {
+      "Name": "Dr. Patel",
+      "ID": 2,
+      "Specialization": "Eyes",
+      "Availability": "Morning"
+    },
+    {
+      "Name": "Dr. Naved",
+      "ID": 3,
+      "Specialization": "Brain",
+      "Availability": "Evening"
+    },
+    {
+      "Name": "Dr. Desai",
+      "ID": 4,
+      "Specialization": "General",
+      "Availability": "Morning/Evening"
+    },
+    {
+      "Name": "Dr. Jeet",
+      "ID": 5,
+      "Specialization": "Skin",
+      "Availability": "Evening"
+    }
+  ],
+  "Cliniques": [
+    {
+      "Name": "City Hospital",
+      "ID": 1
+    },
+    {
+      "Name": "KEM",
+      "ID": 2
+    },
+    {
+      "Name": "Lilavati Hospital",
+      "ID": 3
+    },
+    {
+      "Name": "Tata Hospital",
+      "ID": 4
+    },
+    {
+      "Name": "J.J. Hospital",
+      "ID": 5
+    }
+  ]
+}

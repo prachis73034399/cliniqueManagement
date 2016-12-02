@@ -1,0 +1,9 @@
+{
+  "Cliniques":[
+    {"Name":"City Hospital","ID":1},
+    {"Name":"KEM","ID":2},
+    {"Name":"Lilavati Hospital","ID":3},
+    {"Name":"Tata Hospital","ID":4},
+    {"Name":"J.J. Hospital","ID":5}
+  ]
+}
