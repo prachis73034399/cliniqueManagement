@@ -23,13 +23,13 @@ import com.bridgelabz.model.Patient;
 
 public class DataJsonReader<T>
 {
-	public void jsonDoctorRead() throws ParseException, SQLException
+	public void jsonDoctorRead(File file) throws ParseException, SQLException
 	{
 		
 		JdbcDao jdbcDao = new QueryInjection();
 		//creating JSonParser Object it is use to convert a JSON text to a JavaScript object.
 		JSONParser parser = new JSONParser();
-		File file = new File("data.json");
+	
 		try
 		{    
 			Object object = parser.parse(new FileReader(file));
@@ -149,5 +149,7 @@ public class DataJsonReader<T>
 		}
 		
 	}
+	
+
 
 }

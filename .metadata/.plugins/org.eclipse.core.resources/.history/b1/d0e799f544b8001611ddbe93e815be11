@@ -1,0 +1,93 @@
+package com.bridgelabz.main;
+
+
+
+import com.bridgelabz.Utility.Utility;
+import com.bridgelabz.dao.JdbcDao;
+import com.bridgelabz.dao.QueryInjection;
+import com.bridgelabz.jsonread.DataJsonReader;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.bridgelabz.model.Clinique;
+import com.bridgelabz.model.Doctor;
+public class CliniqueMangement 
+{
+	public static <T> void main(String[] args)throws Exception
+	{
+		//creating object of JdbcDao class
+		JdbcDao jdbcDao = new QueryInjection();
+		//creating object of Doctor class
+		Doctor doct= new Doctor();
+		// creating object of Utility
+		Utility u= new Utility();
+		//creating object of DataJsonReader class
+		DataJsonReader doctorJsonReader = new DataJsonReader();
+		 doctorJsonReader.jsonDoctorRead();
+
+		 System.out.println("...Choose Option... ") ;
+			System.out.println("1---Take Appointment ") ;
+
+			System.out.println("...Choose Option...") ;
+			// taking option from user
+			int choice =u.inputNumber();
+			// switch cases for user choice
+			switch(choice)
+			{
+				case 1:
+						// If user wants to take appointment	
+						System.out.println("Enter the id of Patient:");
+						// calling inputNumber method for accepting id
+						int patientId =u.inputNumber();
+						// searchNameOfPatientUsingId will give name of patient using patient Id
+						String patientName =jdbcDao.searchNameOfPatientUsingId(patientId);
+						
+						// for that patient available cliniques are shown by searchCliniqueForPatient method
+						List<Integer> listOfCliniques =jdbcDao.searchCliniqueForPatient(patientId);
+						System.out.println("Available Cliniques For "+patientName+" are :");
+						for (Integer cliniqueId : listOfCliniques) 
+						{
+							System.out.println("Available cliniques: "+cliniqueId);
+						}
+						
+						System.out.println("Enter the clinique Id");
+						// calling inputNumber method for accepting cliniqueId
+						int cliniqueId =u.inputNumber();
+						
+						// passing cliniqueId to the cliniqueInfo method for getting clinic Information
+						List<Clinique> cliniqueInfo =jdbcDao.cliniqueInfo(cliniqueId);
+						for (Clinique clinique : cliniqueInfo)
+						{
+							System.out.println("Clinic Id:"+clinique.getCliniqueId()+"  Clinique Name: "+clinique.getCliniqueName());
+						}
+						
+						// Enter the the timimg of appointment
+						System.out.println("Enter the time of the appointment:");
+						String timing =u.inputString();
+						
+						// passing timing and cliniqueId for getting available doctors list at particular time and at particular clinique
+						List<Doctor> listOfDoctorId =jdbcDao.availableDoctorsInTime(timing, cliniqueId);
+						System.out.println("Available Doctors in "+timing+ " are :");
+
+						System.out.println("Doctor Id         Doctor Name            Specialization ");
+						for (Doctor doctor : listOfDoctorId) 
+						{
+							//System.out.println("DOCT ID: "+doctor.getDoctorId());
+							List<Doctor> ListOfDoctorInfo=jdbcDao.doctorsInfo(doctor.getDoctorId());
+							
+							for (Doctor doctor2 : ListOfDoctorInfo) 
+							{
+								System.out.println("  "+doctor2.getDoctorId()+"             "+doctor2.getDoctorName()+"             "+doctor2.getSpecialization());
+							}
+						}
+			
+						break;
+
+				default : System.out.println("Invalid Key Pressed..!!!");
+			}
+		
+		
+	}
+}

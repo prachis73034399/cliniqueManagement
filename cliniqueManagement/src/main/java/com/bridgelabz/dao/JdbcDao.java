@@ -3,6 +3,7 @@ package com.bridgelabz.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.bridgelabz.model.Appointment;
 import com.bridgelabz.model.Clinique;
 import com.bridgelabz.model.Doctor;
 import com.bridgelabz.model.Patient;
@@ -20,4 +21,8 @@ public interface JdbcDao
 	 public List<Clinique> cliniqueInfo(int clinicId) throws SQLException;
 	 public List<Doctor> availableDoctorsInTime(String availability, int cliniqueId) throws SQLException;
 	 public List<Doctor> doctorsInfo(int doctId) throws SQLException;
+	 public void takeAppointment(Appointment appoinment) throws SQLException;
+	 public int checkAppoinment(Appointment appoinment);
+	 public void takeNextDayAppoinment(Appointment appoinment) throws SQLException;
+	 public void createAppoinment();
 }

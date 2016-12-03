@@ -1,10 +1,14 @@
 package com.bridgelabz.Utility;
 import java.io.BufferedReader; 
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.io.FileInputStream;
 import java.util.Random;
 import java.util.Scanner;
@@ -39,6 +43,18 @@ public class Utility
 		}
 		return 0;
 	}
+	
+	//reading number value	
+		public int inputCharacter(){
+			try{
+				return (char)br.read();	
+			}
+			catch(Exception e){
+				System.out.println(e);
+			}
+			return 0;
+		}
+		
 	
 	//reading long value
 	public long inputLong(){
@@ -391,14 +407,22 @@ return list;
 		}
 		return nums;
 	}
-// writing a data to a file 
-   /* public void writer(String file, String data), 
-{
-   FileWriter fw = new FileWriter(file);
-   fw.write(data);
-   fw.close()
-;
 
-}*/
+
+
+ 
+ public String nextDateFunction(String currentDate) throws ParseException
+ {
+	 
+	 String dt = currentDate;  // Start date
+	 String nextDate;
+	 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	 Calendar c = Calendar.getInstance();
+	 c.setTime(sdf.parse(dt));
+	 c.add(Calendar.DATE, 1);  // number of days to add
+	 nextDate  = sdf.format(c.getTime());
+	 return nextDate;
+ }
+ 
 }
 
